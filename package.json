@@ -1,0 +1,62 @@
+{
+  "name": "@argszero/cordis-plugin-session-trigger",
+  "description": "Resume-or-deliver for dsh sessions: send a message to an existing session whether or not an activation already owns it. A session has exactly one writer, claimed by whoever opens it for write — and opening a session in the UI activates its agent, so a plugin that calls `ctx.agents.resume()` unconditionally fails with `already owned by an active write handle`. This plugin supplies the missing primitive: deliver to the live agent when one exists, resume only when nobody holds the session, adopt a losing race instead of failing it, and when the session really is held, say which of the two locks holds it. Source: discussion #7156. Works across the dsh 0.1.2 / 0.1.3 / 0.1.5 / 0.1.6 prerelease lines — it programs only against the documented `ctx.agents` and `ctx.agentDefaultModel` service shapes and imports no dsh package at runtime.",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/types/**/*.d.ts",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/argszero/cordis-plugin-session-trigger.git"
+  },
+  "homepage": "https://github.com/argszero/cordis-plugin-session-trigger#readme",
+  "bugs": {
+    "url": "https://github.com/argszero/cordis-plugin-session-trigger/issues"
+  },
+  "keywords": [
+    "cordis",
+    "deepseek-harness",
+    "dsh",
+    "plugin",
+    "session",
+    "writer-held",
+    "session-lock"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.2"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.2",
+    "@deepseek-ai/dsh-session-persistence": "0.1.6-alpha.2",
+    "@deepseek-ai/schemastery": "^3.18.1",
+    "@types/node": "^22.10.2",
+    "typescript": "^5.5.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "pretest": "tsc",
+    "prepublishOnly": "tsc",
+    "test": "node --test \"test/*.spec.mjs\""
+  }
+}

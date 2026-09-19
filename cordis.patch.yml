@@ -1,0 +1,18 @@
+# The @argszero/cordis-plugin-session-trigger bundle patch.
+#
+# It needs no deployment-specific config to mount. With an empty config the
+# plugin registers the `sessionTrigger` service and defaults to followup
+# delivery, retaining every agent it resumes.
+#
+#   - insert:
+#       - id: session-trigger
+#         config:
+#           mode: followup    # followup (default) queues a new turn; steer joins the nearest step
+#           retain: true      # keep a resumed agent alive for the plugin's lifetime; false disposes it after delivery
+#
+# Inside a bundle whose patch already has rows, add the same `insert` entry
+# instead of a second document.
+
+- insert:
+    - id: session-trigger
+      name: '@argszero/cordis-plugin-session-trigger'
